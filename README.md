@@ -22,7 +22,7 @@ If your CPU is older than Intel Haswell architecture, the binary installed with 
 Even if your CPU is newer than Haswell, Qulacs installed with the below command shows better performance but takes a longer time. See "Install Python library from source" section for detail.
 
 ```
-pip install git+https://github.com/qulacs/qulacs.git
+pip install git+https://github.com/WeidSn/qulacs.git
 ```
 
 If you have NVIDIA GPU and CUDA is installed, GPU-version can be installed with the following command:
