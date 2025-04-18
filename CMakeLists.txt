@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.5...4.0)
+
 
 if (POLICY CMP0048)
 	cmake_policy(SET CMP0048 NEW)
@@ -9,6 +10,8 @@ endif (POLICY CMP0048)
 if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.24.0")
 	cmake_policy(SET CMP0135 NEW)
 endif()
+
+cmake_policy(SET CMP0054 NEW)              # explicitly enforce NEW behavior
 
 project(qulacs)
 
@@ -45,7 +48,7 @@ cmake_print_variables(CMAKE_CXX_COMPILER_ID
                       CMAKE_CXX_COMPILER_VERSION)
 
 
-if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	if(${CMAKE_C_COMPILER_VERSION} VERSION_LESS 7.0.0)
 		message(FATAL_ERROR "gcc >= 7.0.0 is required.")
 	endif()
@@ -57,12 +60,12 @@ if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
 	else()
 		set(DEFAULT_OPT_FLAGS "-mtune=native -march=native")
 	endif()
-elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 	message(STATUS "MSVC_VERSION = ${MSVC_VERSION}")
 	if(${MSVC_VERSION} VERSION_LESS 1900)
 		message(FATAL_ERROR "MSVC >= 2015 is required.")
 	endif()
-elseif ((${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang") OR (${CMAKE_CXX_COMPILER_ID} STREQUAL "AppleClang"))
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang")
 	set(DEFAULT_USE_OMP No)
 	if(${COVERAGE})
 		message(FATAL_ERROR "Coverage is not supported for clang. Do not set COVERAGE=Yes on this environment.")
